@@ -16,7 +16,7 @@ public class SwitcheServico {
 		this.switcheRepositorio = switcheRepositorio;
 	}
 
-	public Page<Switche> getAllPaged(Pageable pageable) {
-		return switcheRepositorio.findAll(pageable);
+	public Page<Switche> getAllPaged(String hostname, String marca, String data, Pageable pageable) {
+		return switcheRepositorio.findAll(hostname, marca, data, pageable);
 	}
 }
