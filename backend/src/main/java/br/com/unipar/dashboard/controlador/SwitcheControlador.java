@@ -3,6 +3,7 @@ package br.com.unipar.dashboard.controlador;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ public class SwitcheControlador {
 		this.switcheServico = switcheServico;
 	}
 
+	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping(produces = "application/json")
     public ResponseEntity<Page<Switche>> getAllPaged(
             @RequestParam(required = false) String hostname, 
