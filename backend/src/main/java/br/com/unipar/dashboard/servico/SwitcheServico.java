@@ -1,8 +1,13 @@
 package br.com.unipar.dashboard.servico;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.unipar.dashboard.entidade.Switche;
 import br.com.unipar.dashboard.repositorio.SwitcheRepositorio;
@@ -16,7 +21,12 @@ public class SwitcheServico {
 		this.switcheRepositorio = switcheRepositorio;
 	}
 
-	public Page<Switche> getAllPaged(String hostname, String marca, String data, Pageable pageable) {
-		return switcheRepositorio.findAll(hostname, marca, data, pageable);
+	@Transactional(readOnly = true)
+	public Page<Switche> getAllPaged(String hostname, String marca, String minDate, String maxDate, Pageable pageable) {
+		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		LocalDate min = minDate.equals("") ? today.minusDays(365) : LocalDate.parse(minDate);
+		LocalDate max = maxDate.equals("") ? today : LocalDate.parse(maxDate);
+		
+		return switcheRepositorio.findAll(hostname, marca, min.toString(), max.toString(), pageable);
 	}
 }
