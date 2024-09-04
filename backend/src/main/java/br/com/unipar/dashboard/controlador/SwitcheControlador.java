@@ -25,10 +25,10 @@ public class SwitcheControlador {
 	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping(produces = "application/json")
     public ResponseEntity<Page<Switche>> getAllPaged(
-    		@RequestParam(value = "hostname", defaultValue = "", required = false) String hostname,
-    	    @RequestParam(value = "marca", defaultValue = "", required = false) String marca,
-    	    @RequestParam(value = "minDate", defaultValue = "", required = false) String minDate, 
-			@RequestParam(value = "maxDate", defaultValue = "", required = false) String maxDate,
+    		@RequestParam(required = false) String hostname,
+    	    @RequestParam(required = false) String marca,
+    	    @RequestParam(required = false) String minDate, 
+			@RequestParam(required = false) String maxDate,
             Pageable pageable) {
 		Page<Switche> page = switcheServico.getAllPaged(hostname, marca, minDate, maxDate, pageable);
         return ResponseEntity.ok().body(page);

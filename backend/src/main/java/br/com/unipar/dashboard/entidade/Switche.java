@@ -1,6 +1,6 @@
 package br.com.unipar.dashboard.entidade;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ public class Switche {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long registro;
-	private Date data;
+	private LocalDate data;
 	private String hora;
 	private String hostname;
 	private String ipAddress;
@@ -31,7 +31,7 @@ public class Switche {
 		super();
 	}
 
-	public Switche(Long registro, Date data, String hora, String hostname, String ipAddress, String macAddress,
+	public Switche(Long registro, LocalDate data, String hora, String hostname, String ipAddress, String macAddress,
 			String marca, String modelo, String numSerie, String versao, String imobilizado) {
 		super();
 		this.registro = registro;
@@ -55,11 +55,11 @@ public class Switche {
 		this.registro = registro;
 	}
 
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

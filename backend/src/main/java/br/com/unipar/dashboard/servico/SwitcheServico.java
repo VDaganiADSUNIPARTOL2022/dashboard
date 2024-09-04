@@ -16,6 +16,8 @@ import br.com.unipar.dashboard.repositorio.SwitcheRepositorio;
 public class SwitcheServico {
 
 	private final SwitcheRepositorio switcheRepositorio;
+	LocalDate min;
+	LocalDate max;
 	
 	public SwitcheServico(SwitcheRepositorio switcheRepositorio) {
 		this.switcheRepositorio = switcheRepositorio;
@@ -24,9 +26,10 @@ public class SwitcheServico {
 	@Transactional(readOnly = true)
 	public Page<Switche> getAllPaged(String hostname, String marca, String minDate, String maxDate, Pageable pageable) {
 		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		
 		LocalDate min = minDate.equals("") ? today.minusDays(365) : LocalDate.parse(minDate);
 		LocalDate max = maxDate.equals("") ? today : LocalDate.parse(maxDate);
 		
-		return switcheRepositorio.findAll(hostname, marca, min.toString(), max.toString(), pageable);
+		return switcheRepositorio.findAll(hostname, marca, min, max, pageable);
 	}
 }
