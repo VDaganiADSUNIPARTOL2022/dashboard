@@ -40,3 +40,42 @@
 .read-the-docs {
   color: #888;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 40px;
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+header .logo {
+  width: 50%;
+  height: 0.1%;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+header {
+  background: red;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: #666;
+}
+
+.chart-container {
+  width: 100%; /* Ajuste a largura conforme necessário */
+  margin: auto; /* Centraliza o gráfico */
+}

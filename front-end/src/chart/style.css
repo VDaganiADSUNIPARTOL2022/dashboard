@@ -1,0 +1,5 @@
+.chart-container {
+    width: 100%; /* Ajuste a largura conforme necessário */
+    max-width: 1200px; /* Largura máxima opcional */
+    margin: auto; /* Centraliza o gráfico */
+}

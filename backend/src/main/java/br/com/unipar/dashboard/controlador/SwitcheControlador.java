@@ -1,7 +1,7 @@
 package br.com.unipar.dashboard.controlador;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +21,46 @@ public class SwitcheControlador {
 	public SwitcheControlador(SwitcheServico switcheServico) {
 		this.switcheServico = switcheServico;
 	}
-
+	
 	@CrossOrigin(origins = "http://localhost:5173")
-	@GetMapping(produces = "application/json")
-    public ResponseEntity<Page<Switche>> getAllPaged(
-    		@RequestParam(required = false) String hostname,
-    	    @RequestParam(required = false) String marca,
-    	    @RequestParam(required = false) String minDate, 
-			@RequestParam(required = false) String maxDate,
-            Pageable pageable) {
-		Page<Switche> page = switcheServico.getAllPaged(hostname, marca, minDate, maxDate, pageable);
+	@GetMapping(value = "/marca=Edge-Core", produces = "application/json")
+    public ResponseEntity<List<Switche>> getAllMarca1() {
+		List<Switche> page = switcheServico.getAllMarca("Edge-Core");
         return ResponseEntity.ok().body(page);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:5173")
+	@GetMapping(value = "/marca=Cisco", produces = "application/json")
+    public ResponseEntity<List<Switche>> getAllMarca2() {
+		List<Switche> page = switcheServico.getAllMarca("Cisco");
+        return ResponseEntity.ok().body(page);   
+	}
 	
+	@CrossOrigin(origins = "http://localhost:5173")
+	@GetMapping(value = "/marca=HP", produces = "application/json")
+    public ResponseEntity<List<Switche>> getAllMarca3() {
+		List<Switche> page = switcheServico.getAllMarca("HP");
+        return ResponseEntity.ok().body(page);
+	}
 	
+	@CrossOrigin(origins = "http://localhost:5173")
+	@GetMapping(value = "/marca=SMC", produces = "application/json")
+    public ResponseEntity<List<Switche>> getAllMarca4() {
+		List<Switche> page = switcheServico.getAllMarca("SMC");
+        return ResponseEntity.ok().body(page);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:5173")
+	@GetMapping(value = "/marca=Rockwell", produces = "application/json")
+    public ResponseEntity<List<Switche>> getAllMarca5() {
+		List<Switche> page = switcheServico.getAllMarca("Rockwell");
+        return ResponseEntity.ok().body(page);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:5173")
+	@GetMapping(value = "/marca=Hirschmann", produces = "application/json")
+    public ResponseEntity<List<Switche>> getAllMarca6() {
+		List<Switche> page = switcheServico.getAllMarca("Hirschmann");
+        return ResponseEntity.ok().body(page);
+	}
 }

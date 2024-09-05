@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import ChartComponent from './chart/ChartComponent';
+import './App.css';
+import PieChartComponent from './chart/PieChartComponent';
 
 interface DataItem {
   registro: number;
@@ -16,39 +18,76 @@ interface DataItem {
 }
 
 const App: React.FC = () => {
-  const [filter, setFilter] = useState({ modelo: '', hostname: '' });
-  const [data, setData] = useState<{ content: DataItem[] }>({ content: [] });
+  const [data1, setData1] = useState<DataItem[]>([]);
+  const [data2, setData2] = useState<DataItem[]>([]);
+  const [data3, setData3] = useState<DataItem[]>([]);
+  const [data4, setData4] = useState<DataItem[]>([]);
+  const [data5, setData5] = useState<DataItem[]>([]);
+  const [data6, setData6] = useState<DataItem[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8081/switches')
+    fetch('http://localhost:8081/switches/marca=Hirschmann')
       .then((response) => response.json())
-      .then((data) => setData(data))
+      .then((data) => setData1(data))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFilter((prev) => ({ ...prev, [name]: value }));
-  };
+  useEffect(() => {
+    fetch('http://localhost:8081/switches/marca=Edge-Core')
+      .then((response) => response.json())
+      .then((data) => setData2(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/switches/marca=Cisco')
+      .then((response) => response.json())
+      .then((data) => setData3(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/switches/marca=HP')
+      .then((response) => response.json())
+      .then((data) => setData4(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/switches/marca=SMC')
+      .then((response) => response.json())
+      .then((data) => setData5(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/switches/marca=Rockwell')
+      .then((response) => response.json())
+      .then((data) => setData6(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
   return (
-    <div>
-      <input
-        type="text"
-        name="modelo"
-        placeholder="Filtrar por modelo"
-        value={filter.modelo}
-        onChange={handleFilterChange}
-      />
-      <input
-        type="text"
-        name="hostname"
-        placeholder="Filtrar por hostname"
-        value={filter.hostname}
-        onChange={handleFilterChange}
-      />
-      <ChartComponent data={data} filter={filter} />
-    </div>
+    <>
+      <div className="container">
+          <header>
+            <img src="https://lp.unipar.br/wp-content/uploads/2024/01/unipar.png" alt="Unipar Logo" className="logo" />
+            <span>Bem-vindo ao Dashboard</span>
+          </header>
+
+        </div>
+      <div className="chart-container">
+        <ChartComponent data={data1} />
+        <ChartComponent data={data2} />
+        <ChartComponent data={data3} />
+        <ChartComponent data={data4} />
+        <ChartComponent data={data5} />
+        <ChartComponent data={data6} />
+        <div className="footer">
+          Copyright © 2024
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Bar } from 'react-chartjs-2';
+import './style.css'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -19,26 +20,45 @@ interface DataItem {
 }
 
 interface ChartComponentProps {
-  data: { content: DataItem[] };
-  filter: { modelo: string; hostname: string };
+  data: DataItem[];
 }
 
-const ChartComponent: React.FC<ChartComponentProps> = ({ data, filter }) => {
-  const filteredData = useMemo(() => {
-    return data.content.filter((item) =>
-      item.modelo.includes(filter.modelo)
-    );
-  }, [data, filter]);
+const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
+  const aggregatedData = useMemo(() => {
+    // Usar um objeto para contar o número de registros por data
+    const dataCountMap = new Map<string, number>();
+
+    data.forEach(item => {
+      if (dataCountMap.has(item.data)) {
+        dataCountMap.set(item.data, dataCountMap.get(item.data)! + 1);
+      } else {
+        dataCountMap.set(item.data, 1);
+      }
+    });
+
+    const labels = Array.from(dataCountMap.keys());
+    const values = Array.from(dataCountMap.values());
+
+    return { labels, values };
+  }, [data]);
+
+  // Obter uma marca única (presumindo que todos os itens têm a mesma marca)
+  const uniqueBrands = Array.from(new Set(data.map(item => item.marca)));
+  const label = uniqueBrands.length > 0 ? uniqueBrands[0] : 'Marca';
 
   const chartData = {
-    labels: filteredData.map((item) => item.data.split('T')[0]),
+    labels: aggregatedData.labels,
     datasets: [
       {
-        label: 'Registro',
-        data: filteredData.map((item) => item.registro),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        label: `Número de Registros (${label})`,
+        data: aggregatedData.values,
+        backgroundColor: 'rgba(54, 162, 235, 0.4)', // Azul forte
+        borderColor: 'rgba(54, 162, 235, 1)', // Azul forte
+        borderWidth: 1, // Largura da borda ajustada para melhor visualização
+        borderRadius: 8, // Bordas arredondadas para as barras
+        barThickness: 3, // Largura das barras ajustada
+        hoverBackgroundColor: 'rgba(54, 162, 235, 0.6)', // Cor de fundo ao passar o mouse
+        hoverBorderColor: 'rgba(54, 162, 235, 1)', // Cor da borda ao passar o mouse
       },
     ],
   };
